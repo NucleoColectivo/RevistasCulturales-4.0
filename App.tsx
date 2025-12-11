@@ -5,6 +5,8 @@ import HomePage from './components/HomePage';
 import Catalog from './components/Catalog';
 import { DocumentViewer } from './components/DocumentViewer';
 import VisualizationLab from './components/VisualizationLab';
+import TutorialsPage from './components/TutorialsPage';
+import PublicationsPage from './components/PublicationsPage';
 import ChatBot from './components/ChatBot';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';
 
@@ -102,6 +104,9 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/catalogo" element={<Catalog />} />
+              <Route path="/tutorials" element={<TutorialsPage />} />
+              <Route path="/publicaciones" element={<PublicationsPage />} />
+              <Route path="/bibliografia" element={<PublicationsPage />} />
               <Route path="/documento/:id" element={<DocumentViewer />} />
               <Route path="/lab" element={<VisualizationLab />} />
               <Route path="/lab/timeline" element={<VisualizationLab />} />

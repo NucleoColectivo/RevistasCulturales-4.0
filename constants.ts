@@ -1,4 +1,6 @@
-import { Magazine, GraphData, BlogPost } from './types';
+import { Magazine, GraphData, BlogPost, BibliographyItem, ProjectPublication } from './types';
+
+// ... (Previous MOCK_BLOG_POSTS and MOCK_MAGAZINES remain the same, adding new data below)
 
 export const MOCK_BLOG_POSTS: BlogPost[] = [
   {
@@ -71,6 +73,93 @@ export const MOCK_BLOG_POSTS: BlogPost[] = [
     lang: 'de',
     imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop'
   }
+];
+
+export const MOCK_PROJECT_PUBLICATIONS: ProjectPublication[] = [
+  {
+    id: 'pp-1',
+    title: 'Cultural Magazines from "Modernismo" to Avant-Garde: Processes of Modernization',
+    date: '12 August 2020',
+    author: 'hanno.ehrlicher',
+    abstract: 'Research project funded by the DFG (Project number 327964298). The following series of articles give insides as well as exemplary outcommings of this project.',
+    tags: ['Avant-Garde', 'Modernismo', 'DFG'],
+    type: 'Article'
+  },
+  {
+    id: 'pp-2',
+    title: 'Atlas.ti: un primer acercamiento para el análisis cualitativo y cuantitativo',
+    date: '23 November 2018',
+    author: 'Claudia Cedeño',
+    abstract: 'El software ATLAS.ti resulta de gran utilidad para el análisis de grandes conjuntos de información, su versatilidad permite trabajar con diversos materiales.',
+    tags: ['Atlas.ti', 'Tutorial', 'Análisis'],
+    type: 'Tutorial'
+  },
+  {
+    id: 'pp-3',
+    title: 'Voices from a Lost World: When rare oriental texts are dusted off',
+    date: '13 August 2018',
+    author: 'hanno.ehrlicher',
+    abstract: 'Few Hispanic scholars think to include the Sephardic Jewish diaspora as part of the Hispanosphere, despite the fact that their abandonment of Spanish territory after 1492 did not mean that they abandoned their hispanidad.',
+    tags: ['Sephardi', 'Journalism', 'Ladino'],
+    type: 'Article'
+  },
+  {
+    id: 'pp-4',
+    title: 'Medir la vanguardia desmedida: conflictos de localización',
+    date: '6 February 2018',
+    author: 'hanno.ehrlicher',
+    abstract: 'Sobre el editorial anónimo de Guillermo de Torre en Gaceta Literaria (1927) y el giro geopolítico hacia Madrid.',
+    tags: ['Geopolítica', 'Vanguardia', 'Madrid'],
+    type: 'Article'
+  },
+  {
+    id: 'pp-5',
+    title: 'Herramientas digitales para la visualización de redes (tutorial)',
+    date: '26 April 2016',
+    author: 'teresa.herzgsell',
+    abstract: 'Guía práctica para el uso de herramientas de análisis de redes en el estudio de revistas culturales.',
+    tags: ['Tutorial', 'Redes', 'Visualización'],
+    type: 'Tutorial'
+  },
+  {
+    id: 'pp-6',
+    title: 'Zeitschriften als Netzwerke und ihre digitale Visualisierung',
+    date: '11 March 2016',
+    author: 'teresa.herzgsell',
+    abstract: 'The way we read reviews and little magazines in the humanities is changing, due to new methods of quantitative data analysis.',
+    tags: ['Network', 'Methodology', 'German'],
+    type: 'Article'
+  },
+  {
+    id: 'pp-7',
+    title: 'Almacenes de un tiempo en fuga: Revistas culturales en la modernidad hispánica',
+    date: '12 March 2014',
+    author: 'administrator',
+    abstract: 'Libro en línea resultado del coloquio internacional en Augsburg (2013). Inaugura la red colaborativa Revistas 2.0.',
+    tags: ['Book', 'Coloquio', 'Modernidad'],
+    type: 'Book'
+  }
+];
+
+export const MOCK_BIBLIOGRAPHY: BibliographyItem[] = [
+  { id: 'b1', type: 'Sekundärliteratur', title: 'Estrategias vanguardistas: para un estudio de la literatura nueva en Aragón, 1925-1945', year: '1990', author: 'Serrano Asenjo, José Enrique', culturalArea: 'Península ibérica' },
+  { id: 'b2', type: 'Sekundärliteratur', title: 'La revue chilienne Mandrágora, 1938-1943: naissance d’une polémique autour de “manifestes”', year: '1998', author: 'Lalisse-Delcourt, Nathalie', culturalArea: 'Hispanoamérica' },
+  { id: 'b3', type: 'Sekundärliteratur', title: '"La República de las Letras" (1905 y 1907): un ejemplo de recepción, afinidad estética y deserción traductora', year: '2001', author: 'Ruiz Casanova, José Francisco', editor: 'Luis Pegenaute', culturalArea: 'Hispanoamérica', place: 'Barcelona' },
+  { id: 'b4', type: 'Sekundärliteratur', title: '"Las revistas culturales como documentos de la historia latinoamericana"', year: '2003', author: 'Beigel, Fernanda', culturalArea: 'Hispanoamérica', place: 'Maracaibo' },
+  { id: 'b5', type: 'Sekundärliteratur', title: '1616 English and Spanish Poetry. Una revista de Manuel Altaguirre y Concha Méndez', year: '2005', author: 'Osuna, Rafael', editor: 'Ramos Ortega, Manuel', culturalArea: 'Iberische Halbinsel' },
+  { id: 'b6', type: 'Sekundärliteratur', title: '1927. Revista de Avance', year: '1973', author: 'Marinello Vidaurreta, Juan', culturalArea: 'Karibik' },
+  { id: 'b7', type: 'Sekundärliteratur', title: '24 años', year: '1935', author: 'Vasconcelos, Ramón', culturalArea: 'Karibik' },
+  { id: 'b8', type: 'Sekundärliteratur', title: '50 años de la Revista de Avance', year: '1978', author: 'Museo Nacional', culturalArea: 'Hispanoamérica', place: 'La Habana' },
+  { id: 'b9', type: 'Zeitschrift', title: 'A la Nueva Ventura', year: '1934', author: 'Francisco Pino, José María Luelmo (funds.)', culturalArea: 'Península ibérica', place: 'Valladolid' },
+  { id: 'b10', type: 'Sekundärliteratur', title: 'A manera de prólogo', year: '1966', author: 'Sariol, Juan Francisco', culturalArea: 'Karibik', place: 'Manzanillo' },
+  { id: 'b11', type: 'Zeitschrift', title: 'A patir de cero', year: '1951-1953; 1956', author: 'Enrique Molina', culturalArea: 'Hispanoamérica', place: 'Buenos Aires' },
+  { id: 'b12', type: 'Zeitschrift', title: 'ABC. Revista semanal de literatura amena y variada', year: '1914-', author: 'Edmundo Montagne', culturalArea: 'Hispanoamérica', place: 'Buenos Aires' },
+  { id: 'b13', type: 'Zeitschrift', title: 'ABCDario. Hojas de letra, arte, crítica', year: '1929-1930', author: 'José Varallanos', culturalArea: 'Hispanoamérica', place: 'Lima' },
+  { id: 'b14', type: 'Zeitschrift', title: 'Abside. Revista de cultura mexicana', year: '1937-1979', author: 'Gabriel Méndez Plancarte', culturalArea: 'Hispanoamérica', place: 'México' },
+  { id: 'b15', type: 'Zeitschrift', title: 'Acción. Diario de Purificación Nacional', year: '1925', author: 'Vicente García-Huidobro', culturalArea: 'Hispanoamérica', place: 'Santiago de Chile' },
+  { id: 'b16', type: 'Zeitschrift', title: 'Acronal', year: '1929-1930', author: 'Pablo Garrido', culturalArea: 'Hispanoamérica', place: 'Antofagasta' },
+  { id: 'b17', type: 'Zeitschrift', title: 'Amauta', year: '1926-1930', author: 'José Carlos Mariátegui', culturalArea: 'Hispanoamérica', place: 'Lima' },
+  { id: 'b18', type: 'Zeitschrift', title: 'Alfar', year: '1923-1955', author: 'Julio C. Casal', culturalArea: 'Transatlántico', place: 'La Coruña / Montevideo' }
 ];
 
 export const MOCK_MAGAZINES: Magazine[] = [
@@ -329,7 +418,6 @@ export const MOCK_MAGAZINES: Magazine[] = [
     publisher: 'Germán List Arzubide',
     pageCount: 24
   },
-  // New Additions
   {
     id: '16',
     title: 'Orígenes',
@@ -337,7 +425,7 @@ export const MOCK_MAGAZINES: Magazine[] = [
     city: 'La Habana',
     year: 1944,
     yearEnd: 1956,
-    coverUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Revista_Origenes.jpg/300px-Revista_Origenes.jpg', // Placeholder logic, usually use known URL
+    coverUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Revista_Origenes.jpg/300px-Revista_Origenes.jpg',
     description: {
       es: 'Dirigida por José Lezama Lima y José Rodríguez Feo. Cima de la poesía trascendentalista y la resistencia cultural cubana.',
       en: 'Directed by José Lezama Lima and José Rodríguez Feo. Pinnacle of transcendentalist poetry and Cuban cultural resistance.',
@@ -417,7 +505,6 @@ export const MOCK_MAGAZINES: Magazine[] = [
   }
 ];
 
-// Data for D3 Visualization
 export const MOCK_GRAPH_DATA: GraphData = {
   nodes: [
     { id: 'Avance', group: 1, label: 'Revista de Avance' },

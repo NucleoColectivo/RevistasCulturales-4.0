@@ -25,6 +25,27 @@ export interface BlogPost {
   imageUrl?: string;
 }
 
+export interface BibliographyItem {
+  id: string;
+  type: 'Sekundärliteratur' | 'Zeitschrift';
+  title: string;
+  year: string;
+  author: string;
+  editor?: string;
+  culturalArea: string;
+  place?: string;
+}
+
+export interface ProjectPublication {
+  id: string;
+  title: string;
+  date: string;
+  author: string;
+  abstract: string;
+  tags: string[];
+  type: 'Article' | 'Book' | 'Tutorial';
+}
+
 export interface FilterState {
   search: string;
   countries: string[];

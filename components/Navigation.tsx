@@ -15,7 +15,7 @@ const Navigation: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col sticky top-0 z-50">
         {/* Top Bar for University Branding */}
         <div className="bg-[#4a4a49] text-white py-1.5 px-6 text-[10px] md:text-xs font-medium tracking-wider flex justify-end items-center uppercase border-b border-gray-600">
             {/* Language Switcher */}
@@ -33,53 +33,53 @@ const Navigation: React.FC = () => {
         </div>
 
         {/* Banner Area */}
-        <div className="bg-[#e9a144] py-8 px-6 shadow-sm">
+        <div className="bg-[#e9a144] py-4 px-6 shadow-sm">
             <div className="container mx-auto flex flex-col md:flex-row items-center gap-6">
                 <div className="flex items-center">
                     {/* University Logo */}
                     <img 
                         src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Eberhard_Karls_Universit%C3%A4t_T%C3%BCbingen_Logo.svg/800px-Eberhard_Karls_Universit%C3%A4t_T%C3%BCbingen_Logo.svg.png"
                         alt="Eberhard Karls Universität Tübingen"
-                        className="h-20 md:h-24 object-contain mix-blend-multiply opacity-90"
+                        className="h-16 md:h-20 object-contain mix-blend-multiply opacity-90"
                     />
                 </div>
                 
-                <div className="hidden md:block h-16 w-px bg-slate-800 mx-4 opacity-20"></div>
+                <div className="hidden md:block h-12 w-px bg-slate-800 mx-4 opacity-20"></div>
                 
                 <div className="">
-                    <h1 className="font-sans font-bold text-2xl md:text-3xl text-slate-900 tracking-tight uppercase">
+                    <h1 className="font-sans font-bold text-xl md:text-2xl text-slate-900 tracking-tight uppercase">
                         {t('nav.title')}
                     </h1>
                 </div>
             </div>
         </div>
 
-        {/* Navigation Menu */}
-        <div className="bg-[#e9a144] border-t border-amber-600/30">
+        {/* Navigation Menu - Glassmorphism Sticky */}
+        <div className="bg-[#e9a144]/95 backdrop-blur-md border-t border-amber-600/30 shadow-md">
             <div className="container mx-auto px-6">
                 <div className="flex flex-wrap gap-1 text-sm font-medium">
-                    <Link to="/" className={`px-4 py-2 ${isActive('/')}`}>
+                    <Link to="/" className={`px-4 py-3 ${isActive('/')}`}>
                         {t('nav.home')}
                     </Link>
-                    <Link to="/" className={`px-4 py-2 ${isActive('/blog')}`}>
+                    <Link to="/" className={`px-4 py-3 ${isActive('/blog')}`}>
                         {t('nav.blog')}
                     </Link>
-                    <Link to="/catalogo" className={`px-4 py-2 ${isActive('/catalogo')}`}>
+                    <Link to="/catalogo" className={`px-4 py-3 ${isActive('/catalogo')}`}>
                         {t('nav.library')}
                     </Link>
-                    <Link to="/" className={`px-4 py-2 ${isActive('/tutorials')}`}>
+                    <Link to="/tutorials" className={`px-4 py-3 ${isActive('/tutorials')}`}>
                         {t('nav.tutorials')}
                     </Link>
-                    <Link to="/lab" className={`px-4 py-2 ${isActive('/lab')}`}>
+                    <Link to="/lab" className={`px-4 py-3 ${isActive('/lab')}`}>
                         {t('nav.network')}
                     </Link>
-                    <Link to="/catalogo" className={`px-4 py-2 ${isActive('/publicaciones')}`}>
+                    <Link to="/catalogo" className={`px-4 py-3 ${isActive('/publicaciones')}`}>
                         {t('nav.publications')}
                     </Link>
-                    <Link to="/catalogo" className={`px-4 py-2 ${isActive('/bibliografia')}`}>
+                    <Link to="/catalogo" className={`px-4 py-3 ${isActive('/bibliografia')}`}>
                         {t('nav.bibliography')}
                     </Link>
-                    <Link to="/" className={`px-4 py-2 ${isActive('/enlaces')}`}>
+                    <Link to="/" className={`px-4 py-3 ${isActive('/enlaces')}`}>
                         {t('nav.links')}
                     </Link>
                 </div>

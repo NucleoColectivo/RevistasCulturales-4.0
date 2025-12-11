@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { MOCK_MAGAZINES } from '../constants';
-import { ArrowLeft, ZoomIn, Download, Share2, Sparkles, Book, Calendar, MapPin, Grid, Layers, ChevronRight, ChevronLeft, Layout, Maximize2, Minimize2 } from 'lucide-react';
+import { ArrowLeft, ZoomIn, Download, Share2, Sparkles, Book, Calendar, MapPin, Grid, Layout, Maximize2, Minimize2, Quote, X, Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { analyzeMagazine } from '../services/geminiService';
 import ReactMarkdown from 'react-markdown';
 import { useLanguage } from '../contexts/LanguageContext';
@@ -18,6 +18,11 @@ export const DocumentViewer: React.FC = () => {
   const [viewMode, setViewMode] = useState<'single' | 'grid'>('single');
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
+  
+  // Citation Modal State
+  const [showCitationModal, setShowCitationModal] = useState(false);
+  const [citationFormat, setCitationFormat] = useState<'APA' | 'MLA' | 'Chicago'>('APA');
+  const [copied, setCopied] = useState(false);
 
   // Reset state when ID changes
   useEffect(() => {
@@ -37,6 +42,7 @@ export const DocumentViewer: React.FC = () => {
       setCurrentPage(prev => Math.max(1, prev - 1));
     } else if (e.key === 'Escape') {
       setIsFullscreen(false);
+      setShowCitationModal(false);
     }
   }, [magazine]);
 
@@ -69,6 +75,29 @@ export const DocumentViewer: React.FC = () => {
     }
   };
 
+  // Helper to generate citation
+  const getCitation = () => {
+      const today = new Date().toLocaleDateString();
+      const url = window.location.href;
+      
+      switch(citationFormat) {
+          case 'APA':
+             return `${magazine.publisher}. (${magazine.year}). ${magazine.title} [Revista Cultural]. ${magazine.city}. Recuperado de ${url}`;
+          case 'MLA':
+             return `${magazine.title}. ${magazine.city}: ${magazine.publisher}, ${magazine.year}. Web. ${today}. <${url}>.`;
+          case 'Chicago':
+             return `${magazine.publisher}. ${magazine.title}. ${magazine.city}, ${magazine.year}. ${url}.`;
+          default:
+             return '';
+      }
+  }
+
+  const handleCopyCitation = () => {
+      navigator.clipboard.writeText(getCitation());
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+  }
+
   return (
     <div className={`bg-[#121212] flex flex-col text-gray-200 transition-all duration-500 ${isFullscreen ? 'fixed inset-0 z-[100]' : 'h-[calc(100vh-64px)]'}`}>
       {/* Top Bar - Glassmorphism */}
@@ -88,6 +117,14 @@ export const DocumentViewer: React.FC = () => {
             </div>
         </div>
         <div className="flex items-center gap-1 bg-white/5 rounded-lg p-1 border border-white/5">
+            <button 
+                onClick={() => setShowCitationModal(true)}
+                className="p-2 text-gray-400 hover:text-white hover:bg-white/5 rounded-md transition-colors" 
+                title="Citar"
+            >
+                <Quote size={18} />
+            </button>
+            <div className="h-4 w-px bg-white/10 mx-1"></div>
             <button 
                 onClick={() => setViewMode(viewMode === 'single' ? 'grid' : 'single')}
                 className={`p-2 rounded-md transition-all duration-300 ${viewMode === 'grid' ? 'text-amber-400 bg-white/10 shadow-inner' : 'text-gray-400 hover:text-white hover:bg-white/5'}`} 
@@ -330,6 +367,46 @@ export const DocumentViewer: React.FC = () => {
                             )}
                         </div>
                     )}
+                </div>
+            </div>
+        )}
+
+        {/* Citation Modal */}
+        {showCitationModal && (
+            <div className="fixed inset-0 z-[110] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in">
+                <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-md mx-4 animate-fade-in-up">
+                    <div className="flex justify-between items-center mb-6">
+                        <h3 className="font-serif font-bold text-lg text-gray-900">Citar Documento</h3>
+                        <button onClick={() => setShowCitationModal(false)} className="text-gray-400 hover:text-gray-600">
+                            <X size={20} />
+                        </button>
+                    </div>
+
+                    <div className="flex gap-2 mb-4">
+                        {(['APA', 'MLA', 'Chicago'] as const).map(fmt => (
+                            <button
+                                key={fmt}
+                                onClick={() => setCitationFormat(fmt)}
+                                className={`flex-1 py-2 text-sm font-bold rounded-md transition-colors ${citationFormat === fmt ? 'bg-amber-100 text-amber-800' : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}
+                            >
+                                {fmt}
+                            </button>
+                        ))}
+                    </div>
+
+                    <div className="bg-gray-50 p-4 rounded-lg border border-gray-200 mb-6 relative">
+                        <p className="font-serif text-sm text-gray-800 leading-relaxed pr-8">
+                            {getCitation()}
+                        </p>
+                    </div>
+
+                    <button 
+                        onClick={handleCopyCitation}
+                        className="w-full bg-slate-900 hover:bg-slate-800 text-white font-medium py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                    >
+                        {copied ? <Check size={18} /> : <Quote size={18} />}
+                        {copied ? 'Copiado al portapapeles' : 'Copiar Cita'}
+                    </button>
                 </div>
             </div>
         )}
