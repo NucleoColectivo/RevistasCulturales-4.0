@@ -36,11 +36,11 @@ const Navigation: React.FC = () => {
         <div className="bg-[#e9a144] py-4 px-6 shadow-sm">
             <div className="container mx-auto flex flex-col md:flex-row items-center gap-6">
                 <div className="flex items-center">
-                    {/* University Logo */}
+                    {/* Project Logo */}
                     <img 
-                        src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Eberhard_Karls_Universit%C3%A4t_T%C3%BCbingen_Logo.svg/800px-Eberhard_Karls_Universit%C3%A4t_T%C3%BCbingen_Logo.svg.png"
-                        alt="Eberhard Karls Universität Tübingen"
-                        className="h-16 md:h-20 object-contain mix-blend-multiply opacity-90"
+                        src="https://raw.githubusercontent.com/NucleoColectivo/RevistasCulturales-4.0/main/img/logo.png"
+                        alt="Revistas Culturales 4.0"
+                        className="h-16 md:h-24 object-contain drop-shadow-sm"
                     />
                 </div>
                 
@@ -61,7 +61,7 @@ const Navigation: React.FC = () => {
                     <Link to="/" className={`px-4 py-3 ${isActive('/')}`}>
                         {t('nav.home')}
                     </Link>
-                    <Link to="/" className={`px-4 py-3 ${isActive('/blog')}`}>
+                    <Link to="/blog" className={`px-4 py-3 ${isActive('/blog')}`}>
                         {t('nav.blog')}
                     </Link>
                     <Link to="/catalogo" className={`px-4 py-3 ${isActive('/catalogo')}`}>
@@ -73,10 +73,10 @@ const Navigation: React.FC = () => {
                     <Link to="/lab" className={`px-4 py-3 ${isActive('/lab')}`}>
                         {t('nav.network')}
                     </Link>
-                    <Link to="/catalogo" className={`px-4 py-3 ${isActive('/publicaciones')}`}>
+                    <Link to="/publicaciones" className={`px-4 py-3 ${isActive('/publicaciones')}`}>
                         {t('nav.publications')}
                     </Link>
-                    <Link to="/catalogo" className={`px-4 py-3 ${isActive('/bibliografia')}`}>
+                    <Link to="/bibliografia" className={`px-4 py-3 ${isActive('/bibliografia')}`}>
                         {t('nav.bibliography')}
                     </Link>
                     <Link to="/" className={`px-4 py-3 ${isActive('/enlaces')}`}>

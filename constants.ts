@@ -1,6 +1,5 @@
-import { Magazine, GraphData, BlogPost, BibliographyItem, ProjectPublication } from './types';
 
-// ... (Previous MOCK_BLOG_POSTS and MOCK_MAGAZINES remain the same, adding new data below)
+import { Magazine, GraphData, BlogPost, BibliographyItem, ProjectPublication } from './types';
 
 export const MOCK_BLOG_POSTS: BlogPost[] = [
   {
@@ -24,54 +23,74 @@ export const MOCK_BLOG_POSTS: BlogPost[] = [
     imageUrl: 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?q=80&w=800&auto=format&fit=crop'
   },
   {
-    id: 'post-3',
-    title: 'Mujer y prensa en la Modernidad',
-    date: '8 June 2021',
+    id: 'post-project-main',
+    title: 'Cultural Magazines from "Modernismo" to Avant-Garde',
+    date: '12 August 2020',
     author: 'hanno.ehrlicher',
-    excerpt: 'Publicación del volumen colectivo sobre dinámicas de género e identidades públicas en revistas culturales de España e Hispanoamérica.',
-    tags: ['Género', 'Prensa', 'Modernidad'],
-    lang: 'es',
-    imageUrl: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?q=80&w=800&auto=format&fit=crop'
+    excerpt: 'Research project funded by the DFG (Project number 327964298). The following series of articles give insides as well as exemplary outcommings of this project.',
+    tags: ['Avant-Garde', 'Modernismo', 'Research'],
+    lang: 'en',
+    imageUrl: 'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=800&auto=format&fit=crop'
   },
   {
-    id: 'post-4',
-    title: 'Dataset: Foreign authors in "Nosotros" (1908-1919)',
-    date: '15 August 2020',
-    author: 'ventsislav.ikoff',
-    excerpt: 'New dataset recording works in translation and reviews of foreign authors published in the Argentinean magazine Nosotros (Buenos Aires).',
-    tags: ['Dataset', 'Data Science', 'Argentina'],
-    lang: 'en',
+    id: 'post-atlas',
+    title: 'Atlas.ti: un primer acercamiento para el análisis cualitativo',
+    date: '23 November 2018',
+    author: 'Claudia Cedeño',
+    excerpt: 'El software ATLAS.ti resulta de gran utilidad para el análisis de grandes conjuntos de información, su versatilidad permite trabajar con diversos materiales como texto, imagen, audio y video.',
+    tags: ['Plvs Vltra', 'Vanguardia', 'Buenos Aires'],
+    lang: 'es',
     imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop'
   },
   {
-    id: 'post-5',
-    title: 'Call for Papers: Revista de Humanidades Digitales 2020',
-    date: '27 November 2019',
-    author: 'jörg.lehmann',
-    excerpt: 'La Revista de Humanidades Digitales abre su Call for Papers para su número 5. Las fechas de recepción de trabajos son del 25 de noviembre de 2019 al 1 de junio.',
-    tags: ['CfP', 'RHD', 'Open Access'],
-    lang: 'es',
-    imageUrl: 'https://images.unsplash.com/photo-1456324504439-367cee101252?q=80&w=800&auto=format&fit=crop'
-  },
-  {
-    id: 'post-6',
-    title: 'CfP: "Future States - Modernity and national identity"',
-    date: '16 October 2019',
-    author: 'jörg.lehmann',
-    excerpt: 'Modernity and national identity in popular magazines, 1890-1945. A nearly carbon-neutral conference Hosted by the Centre for Design History.',
-    tags: ['Conference', 'Modernity', 'Identity'],
+    id: 'post-rideout',
+    title: 'Judith Rideout: Voices from a Lost World',
+    date: '13 August 2018',
+    author: 'hanno.ehrlicher',
+    excerpt: 'When asked to conceptualise the traditional Spanish-speaking world, most people think of Spain and her former imperial territories. Few Hispanic scholars think to include the Sephardic Jewish diaspora.',
+    tags: ['Gente Vieja', 'Sephardi Journalism', 'Ladino'],
     lang: 'en',
-    imageUrl: 'https://images.unsplash.com/photo-1505664194779-8beaceb93744?q=80&w=800&auto=format&fit=crop'
+    imageUrl: 'https://images.unsplash.com/photo-1461360370896-922624d12aa1?q=80&w=800&auto=format&fit=crop'
   },
   {
-    id: 'post-8',
-    title: 'Revistas Culturales 2.0 auf der DHd2019',
-    date: '26 March 2019',
-    author: 'nanette',
-    excerpt: 'Im Rahmen der neuen AG "Zeitungen & Zeitschriften" des dhd-Verbands werden die Plattform Revistas Culturales 2.0 im Panel der DHd2019 präsentiert.',
-    tags: ['DHd2019', 'Konferenz', 'Digital'],
+    id: 'post-meridiano',
+    title: 'Medir la vanguardia desmedida: conflictos de localización',
+    date: '6 February 2018',
+    author: 'hanno.ehrlicher',
+    excerpt: 'Sobre el editorial anónimo de Guillermo de Torre en Gaceta Literaria (1927) y el giro geopolítico hacia Madrid como "meridiano intelectual".',
+    tags: ['Batalla del Meridiano', 'Gaceta Literaria', 'Geopolítica'],
+    lang: 'es',
+    imageUrl: 'https://images.unsplash.com/photo-1478720568477-152d9b164e63?q=80&w=800&auto=format&fit=crop'
+  },
+  {
+    id: 'post-herzgsell-tutorial',
+    title: 'Herramientas digitales para la visualización de redes (tutorial)',
+    date: '26 April 2016',
+    author: 'teresa.herzgsell',
+    excerpt: 'Guía práctica sobre el uso de Gephi y otras herramientas para visualizar redes intelectuales en revistas culturales.',
+    tags: ['Tutorial', 'Redes', 'Visualización'],
+    lang: 'es',
+    imageUrl: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?q=80&w=800&auto=format&fit=crop'
+  },
+  {
+    id: 'post-herzgsell-netzwerke',
+    title: 'Zeitschriften als Netzwerke und ihre digitale Visualisierung',
+    date: '11 March 2016',
+    author: 'teresa.herzgsell',
+    excerpt: 'The way we read reviews and little magazines in the humanities is changing, due to new methods of quantitative data analysis.',
+    tags: ['Methodology', 'German', 'Networks'],
     lang: 'de',
-    imageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop'
+    imageUrl: 'https://images.unsplash.com/photo-1558494949-ef2a0198e716?q=80&w=800&auto=format&fit=crop'
+  },
+  {
+    id: 'post-almacenes',
+    title: 'Almacenes de un tiempo en fuga: Revistas culturales',
+    date: '12 March 2014',
+    author: 'administrator',
+    excerpt: 'Libro en línea resultado del coloquio internacional. Inaugura la red colaborativa formada por investigadores de Europa y América Latina.',
+    tags: ['Libro', 'Coloquio', 'Modernidad'],
+    lang: 'es',
+    imageUrl: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=800&auto=format&fit=crop'
   }
 ];
 
@@ -554,7 +573,7 @@ export const MOCK_GRAPH_DATA: GraphData = {
     { source: 'Sur', target: 'Ocampo', value: 5 },
     { source: 'Sur', target: 'Borges', value: 4 },
     { source: 'Sur', target: 'Occidente', value: 3 },
-    { source: 'Sur', target: 'Origenes', value: 2 }, // Connection between Ocampo and Lezama circles
+    { source: 'Sur', target: 'Origenes', value: 2 },
     
     { source: 'MF', target: 'Borges', value: 3 },
     { source: 'MF', target: 'Vanguardia', value: 3 },
@@ -579,10 +598,34 @@ export const MOCK_GRAPH_DATA: GraphData = {
     { source: 'Mito', target: 'Filosofia', value: 3 },
     
     { source: 'Claridad', target: 'Realismo', value: 5 },
-    { source: 'Claridad', target: 'MF', value: 1 }, // Rivalry link
+    { source: 'Claridad', target: 'MF', value: 1 },
     
     { source: 'HijoProdigo', target: 'Paz', value: 5 },
     { source: 'HijoProdigo', target: 'Surrealismo', value: 3 },
     { source: 'HijoProdigo', target: 'Contemporaneos', value: 3 }
   ]
 };
+
+export const MOCK_VIDEOS = [
+    {
+        id: 'v1',
+        title: 'Revistas Culturales: Una Introducción',
+        author: 'Eberhard Karls Universität Tübingen',
+        thumbnail: 'https://images.unsplash.com/photo-1578357078586-4917d4855dc8?q=80&w=800&auto=format&fit=crop',
+        videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' 
+    },
+    {
+        id: 'v2',
+        title: 'Vanguardia y Redes Intelectuales en América Latina',
+        author: 'Hanno Ehrlicher',
+        thumbnail: 'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?q=80&w=800&auto=format&fit=crop',
+        videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ' 
+    },
+    {
+        id: 'v3',
+        title: 'Digital Humanities: El Futuro del Archivo',
+        author: 'DH Lab',
+        thumbnail: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=800&auto=format&fit=crop',
+        videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ'
+    }
+];

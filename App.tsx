@@ -3,6 +3,7 @@ import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Navigation from './components/Navigation';
 import HomePage from './components/HomePage';
 import Catalog from './components/Catalog';
+import BlogPage from './components/BlogPage';
 import { DocumentViewer } from './components/DocumentViewer';
 import VisualizationLab from './components/VisualizationLab';
 import TutorialsPage from './components/TutorialsPage';
@@ -53,6 +54,15 @@ const Footer = () => {
             </ul>
             
             <div className="flex flex-wrap gap-4 items-center mt-6">
+                {/* Project Logo in Footer */}
+                <div className="bg-white p-2 rounded shadow-sm h-14 md:h-16 flex items-center justify-center w-auto">
+                     <img 
+                        src="https://raw.githubusercontent.com/NucleoColectivo/RevistasCulturales-4.0/main/img/logo.png"
+                        alt="Revistas Culturales 4.0"
+                        className="h-full w-auto object-contain"
+                    />
+                </div>
+
                 {/* IAI - SPK Logo */}
                 <div className="bg-white p-3 rounded shadow-sm h-14 md:h-16 flex items-center justify-center min-w-[140px]">
                      <img 
@@ -103,6 +113,7 @@ const App: React.FC = () => {
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/blog" element={<BlogPage />} />
               <Route path="/catalogo" element={<Catalog />} />
               <Route path="/tutorials" element={<TutorialsPage />} />
               <Route path="/publicaciones" element={<PublicationsPage />} />

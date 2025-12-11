@@ -1,8 +1,8 @@
 import React from 'react';
 import HeroSection from './HeroSection';
-import { MOCK_BLOG_POSTS, MOCK_MAGAZINES } from '../constants';
+import { MOCK_BLOG_POSTS, MOCK_MAGAZINES, MOCK_VIDEOS } from '../constants';
 import { useLanguage } from '../contexts/LanguageContext';
-import { ArrowRight, BookOpen, Clock, Calendar } from 'lucide-react';
+import { ArrowRight, BookOpen, Clock, Calendar, PlayCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const HomePage: React.FC = () => {
@@ -67,16 +67,58 @@ const HomePage: React.FC = () => {
           </div>
       </section>
 
+      {/* Multimedia Curada Section (NEW) */}
+      <section className="py-20 bg-slate-900 text-white">
+        <div className="container mx-auto px-6">
+            <div className="flex flex-col items-center mb-16 text-center">
+                <span className="text-amber-500 font-bold uppercase tracking-widest text-xs mb-2 block">Selección Especial</span>
+                <h2 className="text-3xl md:text-4xl font-serif font-bold">Curaduría Multimedia</h2>
+                <p className="text-slate-400 mt-4 max-w-2xl font-light">
+                    Una selección de contenidos audiovisuales esenciales para comprender el contexto de las vanguardias y las humanidades digitales.
+                </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {MOCK_VIDEOS.map((video) => (
+                    <div key={video.id} className="group">
+                        <div className="relative aspect-video bg-black rounded-xl overflow-hidden shadow-2xl mb-4 border border-white/10 group-hover:border-amber-500/50 transition-colors">
+                            <iframe 
+                                src={video.videoUrl} 
+                                title={video.title}
+                                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                allowFullScreen
+                            ></iframe>
+                        </div>
+                        <div className="flex items-start gap-3">
+                            <PlayCircle size={20} className="text-amber-500 mt-1 shrink-0" />
+                            <div>
+                                <h3 className="font-bold text-lg leading-tight mb-1 group-hover:text-amber-400 transition-colors">{video.title}</h3>
+                                <p className="text-xs text-slate-500 uppercase tracking-wider">{video.author}</p>
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+      </section>
+
       {/* Latest Research / Blog Grid - The "Professional" Look */}
       <section className="py-20 bg-white border-t border-gray-200">
           <div className="container mx-auto px-6">
-              <div className="text-center mb-16">
-                  <span className="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2 block">{t('sidebar.recent_content')}</span>
-                  <h2 className="text-3xl font-serif font-bold text-gray-900">Investigación & Noticias</h2>
+              <div className="flex justify-between items-end mb-16">
+                  <div>
+                      <span className="text-gray-400 font-bold uppercase tracking-widest text-xs mb-2 block">{t('sidebar.recent_content')}</span>
+                      <h2 className="text-3xl font-serif font-bold text-gray-900">Investigación & Noticias</h2>
+                  </div>
+                  <Link to="/blog" className="text-sm font-semibold text-gray-500 hover:text-accent flex items-center gap-2 transition-colors">
+                        Ver todos <ArrowRight size={16} />
+                  </Link>
               </div>
 
+              {/* Increased grid display to show new entries */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {MOCK_BLOG_POSTS.slice(0, 6).map((post) => (
+                  {MOCK_BLOG_POSTS.slice(0, 9).map((post) => (
                       <article key={post.id} className="flex flex-col group h-full">
                           <div className="relative h-64 overflow-hidden rounded-lg mb-6 shadow-sm">
                               <img 
@@ -102,9 +144,9 @@ const HomePage: React.FC = () => {
                               <p className="text-gray-600 text-sm leading-relaxed mb-4 flex-1 line-clamp-3">
                                   {post.excerpt}
                               </p>
-                              <a href="#" className="inline-flex items-center text-sm font-bold text-accent hover:text-amber-800 transition-colors mt-auto">
+                              <Link to="/blog" className="inline-flex items-center text-sm font-bold text-accent hover:text-amber-800 transition-colors mt-auto">
                                   {t('home.read_more')} <ArrowRight size={14} className="ml-2" />
-                              </a>
+                              </Link>
                           </div>
                       </article>
                   ))}
