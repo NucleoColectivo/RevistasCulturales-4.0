@@ -3,7 +3,7 @@ import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Navigation from './components/Navigation';
 import HomePage from './components/HomePage';
 import Catalog from './components/Catalog';
-import DocumentViewer from './components/DocumentViewer';
+import { DocumentViewer } from './components/DocumentViewer';
 import VisualizationLab from './components/VisualizationLab';
 import ChatBot from './components/ChatBot';
 import { LanguageProvider, useLanguage } from './contexts/LanguageContext';

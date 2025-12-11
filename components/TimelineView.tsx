@@ -12,6 +12,7 @@ const TimelineView: React.FC = () => {
   const navigate = useNavigate();
   const [dimensions, setDimensions] = useState({ width: 1000, height: 800 });
   const [hoveredMag, setHoveredMag] = useState<Magazine | null>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const { language, t } = useLanguage();
 
   // Group magazines by country for better visualization structure
@@ -36,6 +37,17 @@ const TimelineView: React.FC = () => {
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Update mouse position for tooltip
+  const handleMouseMove = (e: React.MouseEvent) => {
+      if (wrapperRef.current) {
+          const rect = wrapperRef.current.getBoundingClientRect();
+          setMousePos({
+              x: e.clientX - rect.left,
+              y: e.clientY - rect.top
+          });
+      }
+  };
 
   useEffect(() => {
     if (!svgRef.current) return;
@@ -81,28 +93,35 @@ const TimelineView: React.FC = () => {
         .domain([minYear, maxYear])
         .range([0, width]);
 
-    // Color Scale
+    // Color Scale - Muted Professional Palette
     const colorScale = d3.scaleOrdinal()
         .domain(countries)
-        .range(d3.schemeTableau10);
+        .range([
+            "#d97706", "#2563eb", "#db2777", "#ea580c", 
+            "#059669", "#7c3aed", "#0891b2", "#be123c",
+            "#4b5563", "#4f46e5"
+        ]);
 
     // Grid lines (vertical)
     g.append("g")
         .attr("class", "grid")
         .attr("transform", `translate(0,${contentHeight})`)
-        .style("stroke-dasharray", ("3,3"))
-        .style("opacity", 0.1)
+        .style("stroke-dasharray", ("4,6"))
+        .style("opacity", 0.15)
         .call(d3.axisBottom(xScale)
             .tickSize(-contentHeight)
             .tickFormat(() => "")
-        );
+        )
+        .select(".domain").remove();
 
     // X Axis Top
     const xAxisTop = d3.axisTop(xScale).tickFormat(d3.format("d"));
     g.append("g")
         .call(xAxisTop)
-        .attr("font-size", "12px")
-        .attr("font-weight", "bold")
+        .attr("font-size", "11px")
+        .attr("font-family", "Inter, sans-serif")
+        .attr("font-weight", "600")
+        .attr("color", "#64748b")
         .select(".domain").remove();
 
     // X Axis Bottom
@@ -110,79 +129,125 @@ const TimelineView: React.FC = () => {
     g.append("g")
         .attr("transform", `translate(0,${contentHeight})`)
         .call(xAxisBottom)
-        .attr("font-size", "12px")
+        .attr("font-size", "11px")
+        .attr("font-family", "Inter, sans-serif")
+        .attr("color", "#94a3b8")
         .select(".domain").attr("stroke", "#e2e8f0");
 
-    // Country Group Labels (Left side)
+    // Y Axis Group
     const yAxisGroup = g.append("g");
     
-    // Magazine Bars
-    g.selectAll(".bar")
+    // Magazine Bars with Animation
+    const bars = g.selectAll(".bar")
         .data(sortedData)
         .enter()
         .append("rect")
         .attr("class", "bar")
         .attr("x", d => xScale(d.year))
         .attr("y", d => yPositions.get(d.id) || 0)
-        .attr("width", d => {
-            const end = d.yearEnd || (d.year + 1);
-            // Min width of 4px for visibility
-            return Math.max(4, xScale(end) - xScale(d.year));
-        })
-        .attr("height", 20)
-        .attr("rx", 3)
+        .attr("width", 0) // Start at 0 for animation
+        .attr("height", 18)
+        .attr("rx", 4)
         .attr("fill", d => colorScale(d.country) as string)
         .attr("cursor", "pointer")
-        .attr("opacity", 0.85)
-        .on("mouseover", (event, d) => {
-            d3.select(event.currentTarget).attr("opacity", 1).attr("stroke", "#333").attr("stroke-width", 1);
+        .attr("opacity", 0.8)
+        .style("filter", "drop-shadow(0px 1px 2px rgba(0,0,0,0.1))")
+        .on("mouseenter", (event, d) => {
+            d3.select(event.currentTarget)
+                .transition().duration(200)
+                .attr("opacity", 1)
+                .attr("height", 22)
+                .attr("y", (yPositions.get(d.id) || 0) - 2)
+                .style("filter", "drop-shadow(0px 4px 6px rgba(0,0,0,0.2))");
             setHoveredMag(d);
         })
-        .on("mouseout", (event) => {
-            d3.select(event.currentTarget).attr("opacity", 0.85).attr("stroke", "none");
+        .on("mouseleave", (event, d) => {
+            d3.select(event.currentTarget)
+                .transition().duration(200)
+                .attr("opacity", 0.8)
+                .attr("height", 18)
+                .attr("y", yPositions.get(d.id) || 0)
+                .style("filter", "drop-shadow(0px 1px 2px rgba(0,0,0,0.1))");
             setHoveredMag(null);
         })
         .on("click", (event, d) => {
             navigate(`/documento/${d.id}`);
         });
 
+    // Animation transition
+    bars.transition()
+        .duration(1000)
+        .ease(d3.easeCubicOut)
+        .delay((d, i) => i * 30) // Staggered delay
+        .attr("width", d => {
+            const end = d.yearEnd || (d.year + 1);
+            return Math.max(8, xScale(end) - xScale(d.year));
+        });
+
     // Magazine Labels (Next to bar)
-    g.selectAll(".mag-label")
+    const labels = g.selectAll(".mag-label")
         .data(sortedData)
         .enter()
         .append("text")
-        .attr("x", d => {
-            const end = d.yearEnd || (d.year + 1);
-            return xScale(end) + 8;
-        })
-        .attr("y", d => (yPositions.get(d.id) || 0) + 14)
+        .attr("x", d => xScale(d.year) - 10) // Start slightly offset
+        .attr("y", d => (yPositions.get(d.id) || 0) + 13)
         .text(d => d.title)
         .attr("font-size", "11px")
-        .attr("fill", "#475569")
+        .attr("font-family", "Merriweather, serif")
+        .attr("fill", "#334155")
         .attr("alignment-baseline", "middle")
+        .attr("opacity", 0)
         .style("cursor", "pointer")
         .on("click", (event, d) => navigate(`/documento/${d.id}`));
 
-    // Y Axis Labels (Magazines) - Left side, connected to Country
+    // Animate Labels sliding in
+    labels.transition()
+        .duration(800)
+        .delay((d, i) => i * 30 + 400)
+        .attr("x", d => {
+            const end = d.yearEnd || (d.year + 1);
+            return xScale(end) + 12;
+        })
+        .attr("opacity", 1);
+
+    // Connecting Lines (Country to First Bar) - decorative
+    yAxisGroup.selectAll(".country-line")
+        .data(countryLabels)
+        .enter()
+        .append("line")
+        .attr("x1", -15)
+        .attr("x2", 0)
+        .attr("y1", d => d.y + 13)
+        .attr("y2", d => d.y + 13)
+        .attr("stroke", d => colorScale(d.country) as string)
+        .attr("stroke-width", 2)
+        .attr("opacity", 0.5);
+
+    // Y Axis Labels (Countries)
     yAxisGroup.selectAll(".country-group-label")
         .data(countryLabels)
         .enter()
         .append("text")
-        .attr("x", -10)
+        .attr("x", -25)
         .attr("y", d => d.y + 14)
         .text(d => d.country)
         .attr("text-anchor", "end")
         .attr("font-size", "12px")
-        .attr("font-weight", "bold")
-        .attr("fill", d => colorScale(d.country) as string);
+        .attr("font-family", "Inter, sans-serif")
+        .attr("font-weight", "700")
+        .attr("letter-spacing", "0.05em")
+        .attr("fill", d => colorScale(d.country) as string)
+        .attr("opacity", 0)
+        .transition().duration(1000).attr("opacity", 1);
 
   }, [dimensions, navigate]);
 
   return (
     <div className="flex flex-col gap-8">
-        {/* Intro Section - Adapted from Tübingen Project content */}
+        {/* Intro Section */}
         <section className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm animate-fade-in">
-            <h3 className="text-xl font-serif font-bold text-gray-800 mb-4">
+            <h3 className="text-xl font-serif font-bold text-gray-800 mb-4 flex items-center gap-3">
+                <span className="w-8 h-1 bg-accent block"></span>
                 {t('timeline.title')}
             </h3>
             <div className="grid md:grid-cols-2 gap-8 text-sm text-gray-600 leading-relaxed">
@@ -194,62 +259,68 @@ const TimelineView: React.FC = () => {
                         {t('timeline.desc_p2')}
                     </p>
                 </div>
-                <div className="bg-slate-50 p-4 rounded-lg border border-slate-100">
-                    <h4 className="font-bold text-slate-800 mb-2 flex items-center gap-2">
-                        <Info size={16} className="text-accent" /> {t('timeline.data_title')}
+                <div className="bg-slate-50 p-5 rounded-lg border border-slate-100 shadow-inner">
+                    <h4 className="font-bold text-slate-800 mb-3 flex items-center gap-2 text-xs uppercase tracking-wide">
+                        <Info size={14} className="text-accent" /> {t('timeline.data_title')}
                     </h4>
-                    <ul className="list-disc list-inside space-y-2">
-                        <li>{t('timeline.data_li1')}</li>
-                        <li>{t('timeline.data_li2')}</li>
-                        <li>{t('timeline.data_li3')}</li>
-                        <li>{t('timeline.click_tooltip')}</li>
+                    <ul className="space-y-2 text-xs">
+                        <li className="flex items-start gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-slate-300 mt-1.5 shrink-0"></span>
+                            {t('timeline.data_li1')}
+                        </li>
+                        <li className="flex items-start gap-2">
+                             <span className="w-1.5 h-1.5 rounded-full bg-slate-300 mt-1.5 shrink-0"></span>
+                             {t('timeline.data_li2')}
+                        </li>
+                        <li className="flex items-start gap-2">
+                             <span className="w-1.5 h-1.5 rounded-full bg-slate-300 mt-1.5 shrink-0"></span>
+                             {t('timeline.data_li3')}
+                        </li>
                     </ul>
                 </div>
             </div>
         </section>
 
         {/* Visualization Wrapper */}
-        <div className="bg-paper min-h-full" ref={wrapperRef}>
-            <div className="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden relative">
-                
-                {/* Canvas */}
-                <div className="overflow-x-auto custom-scrollbar">
-                    <svg 
-                        ref={svgRef} 
-                        width={dimensions.width} 
-                        height={dimensions.height} 
-                        className="bg-slate-50/30"
-                    />
-                </div>
-
-                {/* Hover Card (Tooltip) */}
-                {hoveredMag && (
-                    <div 
-                        className="fixed pointer-events-none z-50 bg-white p-4 rounded-lg shadow-2xl border border-gray-200 w-72 animate-fade-in ring-1 ring-black/5"
-                        style={{ 
-                            left: '50%', 
-                            top: '50%', 
-                            transform: 'translate(-50%, -50%)' 
-                        }}
-                    >
-                        <div className="flex justify-between items-start mb-3 border-b border-gray-100 pb-2">
-                            <span className="text-xs font-bold text-white bg-accent px-2 py-0.5 rounded shadow-sm">
-                                {hoveredMag.country}
-                            </span>
-                            <span className="text-xs font-mono font-medium text-gray-500">
-                                {hoveredMag.year} — {hoveredMag.yearEnd || '...'}
-                            </span>
-                        </div>
-                        <h3 className="font-serif font-bold text-lg leading-tight mb-2 text-gray-900">{hoveredMag.title}</h3>
-                        <p className="text-xs text-gray-600 mb-4 line-clamp-3 leading-relaxed">
-                            {hoveredMag.description[language]}
-                        </p>
-                        <div className="flex items-center gap-1 text-xs text-accent font-bold uppercase tracking-wide">
-                            <MousePointer2 size={12} /> {t('timeline.click_tooltip')}
-                        </div>
-                    </div>
-                )}
+        <div className="bg-white min-h-full rounded-xl shadow-xl border border-gray-200 overflow-hidden relative" ref={wrapperRef} onMouseMove={handleMouseMove}>
+            <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-500/20 to-transparent"></div>
+            
+            {/* Canvas */}
+            <div className="overflow-x-auto custom-scrollbar bg-slate-50/30">
+                <svg 
+                    ref={svgRef} 
+                    width={dimensions.width} 
+                    height={dimensions.height} 
+                />
             </div>
+
+            {/* Premium Hover Card (Tooltip) - Positioned dynamically near mouse or fixed */}
+            {hoveredMag && (
+                <div 
+                    className="fixed pointer-events-none z-50 bg-white/95 backdrop-blur-md p-5 rounded-xl shadow-2xl border border-white/20 w-80 animate-fade-in-up"
+                    style={{ 
+                        left: Math.min(window.innerWidth - 340, mousePos.x + 40), // Prevent going off screen
+                        top: Math.min(window.innerHeight - 200, mousePos.y + 100),
+                        transform: 'translateY(-50%)' 
+                    }}
+                >
+                    <div className="flex justify-between items-start mb-3 border-b border-gray-100 pb-3">
+                        <span className="text-[10px] font-bold text-white bg-accent px-2 py-1 rounded shadow-sm tracking-wide uppercase">
+                            {hoveredMag.country}
+                        </span>
+                        <span className="text-xs font-mono font-bold text-slate-500 bg-slate-100 px-2 py-1 rounded">
+                            {hoveredMag.year} — {hoveredMag.yearEnd || '...'}
+                        </span>
+                    </div>
+                    <h3 className="font-serif font-bold text-xl leading-tight mb-2 text-slate-900">{hoveredMag.title}</h3>
+                    <p className="text-xs text-slate-600 mb-4 line-clamp-3 leading-relaxed">
+                        {hoveredMag.description[language]}
+                    </p>
+                    <div className="flex items-center gap-2 text-[10px] text-accent font-bold uppercase tracking-wide border-t border-dashed border-gray-200 pt-2">
+                        <MousePointer2 size={12} className="animate-bounce-horizontal" /> {t('timeline.click_tooltip')}
+                    </div>
+                </div>
+            )}
         </div>
     </div>
   );

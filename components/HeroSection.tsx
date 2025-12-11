@@ -1,13 +1,13 @@
 import React from 'react';
-import { Search, Map, BookOpen, ChevronRight } from 'lucide-react';
+import { Search, Layers, BookOpen, ChevronRight, Network } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const HeroSection: React.FC = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   return (
-    <div className="relative bg-[#1e293b] text-white overflow-hidden min-h-[85vh] flex items-center">
+    <div className="relative bg-[#1e293b] text-white overflow-hidden min-h-[90vh] flex items-center">
       {/* Texture Overlay */}
       <div 
         className="absolute inset-0 opacity-10 pointer-events-none"
@@ -19,22 +19,31 @@ const HeroSection: React.FC = () => {
       {/* Gradient Overlay - Darker for more elegance */}
       <div className="absolute inset-0 bg-gradient-to-b from-slate-900/95 via-slate-900/90 to-amber-950/40"></div>
 
-      <div className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center">
+      <div className="container mx-auto px-6 relative z-10 flex flex-col items-center text-center pt-8">
         <span className="inline-block py-1.5 px-4 rounded-full bg-white/5 border border-white/10 text-amber-300 font-mono text-[10px] md:text-xs tracking-[0.2em] uppercase mb-8 backdrop-blur-sm animate-fade-in-up">
           {t('hero.tag')}
         </span>
         
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-8 leading-tight max-w-5xl animate-fade-in-up drop-shadow-xl">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-bold mb-6 leading-tight max-w-5xl animate-fade-in-up drop-shadow-xl">
           {t('hero.title_prefix')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-orange-300 to-amber-200 bg-[length:200%_auto] animate-shine">{t('hero.title_highlight')}</span><br/>
           {t('hero.title_suffix')}
         </h1>
 
-        <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-12 font-light leading-relaxed animate-fade-in-up delay-100 antialiased">
+        <p className="text-lg md:text-xl text-slate-200 max-w-3xl mx-auto mb-4 font-light leading-relaxed animate-fade-in-up delay-100 antialiased">
           {t('hero.description')}
         </p>
 
+        <p className="text-sm md:text-base text-slate-400 max-w-3xl mx-auto mb-10 font-light leading-relaxed animate-fade-in-up delay-150 hidden md:block">
+            {language === 'es' 
+             ? "Una expansión sustantiva hacia un entorno inmersivo, automatizado y analítico, integrando la web colaborativa con métodos avanzados de humanidades digitales."
+             : language === 'de'
+             ? "Eine substantive Erweiterung hin zu einer immersiven, automatisierten und analytischen Umgebung, die das kollaborative Web mit fortschrittlichen Methoden der digitalen Geisteswissenschaften verbindet."
+             : "A substantive expansion towards an immersive, automated, and analytical environment, integrating the collaborative web with advanced digital humanities methods."
+            }
+        </p>
+
         {/* Search Box */}
-        <div className="w-full max-w-3xl mx-auto bg-white/5 backdrop-blur-md p-1.5 rounded-2xl shadow-2xl border border-white/10 animate-fade-in-up delay-200 hover:bg-white/10 transition-colors">
+        <div className="w-full max-w-3xl mx-auto bg-white/5 backdrop-blur-md p-1.5 rounded-2xl shadow-2xl border border-white/10 animate-fade-in-up delay-200 hover:bg-white/10 transition-colors mb-8">
            <div className="flex flex-col md:flex-row bg-white rounded-xl overflow-hidden shadow-inner">
                 <div className="flex-1 flex items-center px-4 py-4 md:py-5">
                     <Search className="text-slate-400 w-5 h-5 md:w-6 md:h-6 mr-3" />
@@ -50,18 +59,34 @@ const HeroSection: React.FC = () => {
            </div>
         </div>
 
+        {/* Secondary Call to Action - Research Areas */}
+        <div className="flex flex-wrap justify-center gap-4 animate-fade-in-up delay-300 mb-12">
+             <Link to="/lab" className="px-5 py-2 rounded-full border border-white/10 hover:bg-white/5 hover:border-amber-500/50 text-slate-400 hover:text-amber-300 text-xs md:text-sm font-medium transition-all flex items-center gap-2 group">
+                 <Layers size={14} className="group-hover:text-amber-400" /> 
+                 {language === 'es' ? "Análisis Computacional" : language === 'de' ? "Computergestützte Analyse" : "Computational Analysis"}
+             </Link>
+             <Link to="/lab/timeline" className="px-5 py-2 rounded-full border border-white/10 hover:bg-white/5 hover:border-amber-500/50 text-slate-400 hover:text-amber-300 text-xs md:text-sm font-medium transition-all flex items-center gap-2 group">
+                 <Network size={14} className="group-hover:text-amber-400" />
+                 {language === 'es' ? "Redes Intelectuales" : language === 'de' ? "Intellektuelle Netzwerke" : "Intellectual Networks"}
+             </Link>
+             <Link to="/catalogo" className="px-5 py-2 rounded-full border border-white/10 hover:bg-white/5 hover:border-amber-500/50 text-slate-400 hover:text-amber-300 text-xs md:text-sm font-medium transition-all flex items-center gap-2 group">
+                 <BookOpen size={14} className="group-hover:text-amber-400" />
+                 {language === 'es' ? "Colecciones Transnacionales" : language === 'de' ? "Transnationale Sammlungen" : "Transnational Collections"}
+             </Link>
+        </div>
+
         {/* Stats - Elegant Thin Lines */}
-        <div className="flex flex-wrap justify-center gap-12 md:gap-24 mt-20 md:mt-28 text-slate-400 font-mono border-t border-white/10 pt-10 w-full max-w-5xl animate-fade-in-up delay-300">
+        <div className="flex flex-wrap justify-center gap-12 md:gap-24 text-slate-400 font-mono border-t border-white/10 pt-10 w-full max-w-5xl animate-fade-in-up delay-500">
           <div className="flex flex-col items-center group">
-            <span className="text-4xl font-serif font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">1,250+</span>
+            <span className="text-3xl md:text-4xl font-serif font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">1,250+</span>
             <span className="text-[10px] uppercase tracking-[0.2em]">{t('hero.stats_docs')}</span>
           </div>
           <div className="flex flex-col items-center group">
-            <span className="text-4xl font-serif font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">12</span>
+            <span className="text-3xl md:text-4xl font-serif font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">12</span>
             <span className="text-[10px] uppercase tracking-[0.2em]">{t('hero.stats_countries')}</span>
           </div>
           <div className="flex flex-col items-center group">
-            <span className="text-4xl font-serif font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">1900-1950</span>
+            <span className="text-3xl md:text-4xl font-serif font-bold text-white mb-1 group-hover:text-amber-400 transition-colors">1900-1950</span>
             <span className="text-[10px] uppercase tracking-[0.2em]">Periodo</span>
           </div>
         </div>
